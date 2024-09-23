@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct SplashView: View {
+    
     var body: some View {
         
         ZStack {
@@ -36,9 +37,10 @@ struct SwiftUIView: View {
             }
                
         }
+    
     }
 }
 
 #Preview {
-    SwiftUIView()
+    SplashView()
 }

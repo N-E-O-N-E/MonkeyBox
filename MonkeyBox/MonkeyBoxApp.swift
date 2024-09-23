@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct MonkeyBoxApp: App {
+    
     var body: some Scene {
+        
         WindowGroup {
-            LoginView()
+          
+            ContentView()
+
         }
     }
 }

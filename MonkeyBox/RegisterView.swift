@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  RegisterView.swift
 //  MonkeyBox
 //
 //  Created by Markus Wirtz on 23.09.24.
@@ -7,38 +7,42 @@
 
 import SwiftUI
 
-struct LoginView: View {
-    
+struct RegisterView: View {
     @AppStorage("username") private var loginUser: String = ""
     @AppStorage("password") private var loginPassword: String = ""
     @AppStorage("loginState") private var loginState: Bool = false
     
     var body: some View {
-       
+        
+        Form {
             VStack(alignment:.leading) {
                 
                 
-                Text("Anmeldung\n").font(.system(size: 40).bold())
-                Text("Bitte Nutzernamen eingeben:")
+                Text("Registrierung\n").font(.system(size: 40).bold())
+                Text("Nutzernamen vergeben:")
                 TextField(text: $loginUser) {
                     Text("Benutzername")
                 }.textFieldStyle(.roundedBorder)
                 
-                Text("Bitte Passwort eingeben:")
+                Text("Passwort vergeben:")
+                SecureField(text: $loginPassword) {
+                    Text("Passwort")
+                }.textFieldStyle(.roundedBorder)
+                Text("Passwort bestätigen:")
                 SecureField(text: $loginPassword) {
                     Text("Passwort")
                 }.textFieldStyle(.roundedBorder)
                 
-                Text("\nKein Account? Jetzt Registrieren")
-                    .font(.system(size: 10)).underline().foregroundStyle(.blue)
-                
-                
-            }.padding(40)
-        
-        
-        
+   
+            }.padding(10)
             
-            Button("Anmelden") {
+            Button("Du hast schon einen Account? Hier anmelden:") {
+                
+                
+            }.font(.caption)
+            
+            
+            Button("Registrieren") {
                 loginState = true
             }.frame(width: 120, height: 40)
                 .background(.blue)
@@ -48,10 +52,13 @@ struct LoginView: View {
         
         
         
+        
+        
+        
     }
-    
+}
 
 
 #Preview {
-    LoginView()
+    RegisterView()
 }
