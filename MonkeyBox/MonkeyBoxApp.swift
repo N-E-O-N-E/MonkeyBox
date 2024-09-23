@@ -14,7 +14,7 @@ struct MonkeyBoxApp: App {
         
         WindowGroup {
           
-            ContentView()
+            SplashView()
 
         }
     }
