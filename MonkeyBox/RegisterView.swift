@@ -18,7 +18,6 @@ struct RegisterView: View {
     @State private var inputUsername: String = ""
     @State private var inputPassword: String = ""
     @State private var inputPasswordConfirm: String = ""
-    
     @State private var showAlert = false
 
     var body: some View {
