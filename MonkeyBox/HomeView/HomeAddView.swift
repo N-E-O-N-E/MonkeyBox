@@ -19,50 +19,51 @@ struct HomeAddView: View {
         Form {
             Text("Add new Room:")
             TextField("Name", text: $storageName)
-        }.frame(height: 150)
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(storageImages, id: \.self) { image in
-                        
-                        
-                        Button(action: {
-                            selectedImage = ""
-                            selectedImage = image
-                            
-                        }) {
-                            ZStack {
-                                
-                                    Image(image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 150, height: 150)
-                                    
-                                if image == selectedImage {
-                                    let selected = true
-                                    Image(systemName: selected ? "checkmark.circle.fill" : "circle")
-                                        .padding(5)
-                                        .foregroundStyle(selected ? .white : .black)
-                                        .offset(x: 60, y: -60)
-                                    
-                                }
-                                    
-                                    
-                                
-                            }
-                            
-                        }.padding(2)
-                    }
+            
+            Button("Save"){
+                if selectedImage != "" && storageName != "" {
+                    let newStorageRoom = Storage(name: storageName, image: selectedImage)
+                    context.insert(newStorageRoom)
                 }
-                .presentationDetents([.fraction(0.6)])
             }
-        Button("Save"){
-            if selectedImage != "" && storageName != "" {
-                let newStorageRoom = Storage(name: storageName, image: selectedImage)
-                context.insert(newStorageRoom)
-            }
-        }
+            
+        }.frame(height: 190)
         
-       //Text("\(selectedImage)").font(.callout)
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(storageImages, id: \.self) { image in
+                    
+                    Button(action: {
+                        selectedImage = ""
+                        selectedImage = image
+                    }) {
+                        ZStack(alignment:.topTrailing) {
+                            Image(image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 150, height: 150)
+                                .border(.brown)
+                                .shadow(radius: 2)
+                                
+                            
+                            if image == selectedImage {
+                                let selected = true
+  
+                                Circle()
+                                    .fill(.white)
+                                    .frame(width: 30, height: 30)
+                                Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+                                    .padding(5)
+                                    .foregroundStyle(selected ? .pink : .black)
+                                    .scaleEffect(1.5)
+                            }
+                        }
+                    }.padding(8)
+                }
+            }.padding(10)
+            .presentationDetents([.fraction(0.6)])
+        }
+        //Text("\(selectedImage)").font(.callout)
         Spacer()
     }
 }

@@ -35,51 +35,43 @@ struct HomeView: View {
                             // Aktion
                             
                         }) {
-                            
-                            
                             ZStack {
                                 Image(item.image)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 180, height: 140)
                                     .cornerRadius(10)
-                                
                             }
                         }
-                        
                         Text(item.name)
                             .font(.callout)
-                            .padding(5)
+                            .padding(.bottom, 6)
                     }
                     .frame(maxWidth: 180, maxHeight: 190)
                     .background(Color.orange.opacity(0.3))
                     .cornerRadius(15)
                     .padding(10)
-
-                    
                 }
-      
+                
                 VStack(alignment:.center) {
                     Button(action: {
                         showAddSheet = true
-//                        let newStorage: Storage = Storage(name: "Badroom", image: "MonkeyBoxLogo")
-//                        context.insert(newStorage)
-    
                     }) {
                         
-                        
-                        ZStack {
+                        ZStack(alignment:.center) {
                             Image("MonkeyBoxLogo")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 180, height: 140)
                                 .cornerRadius(10)
-                            
-                            Image(systemName: "cross.fill")
-                                .foregroundStyle(.white)
-                                .font(.system(size: 120))
-                                .opacity(0.7)
-                            
+                                .blur(radius: 2)
+                            ZStack {
+                                Image(systemName: "plus.app.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 125))
+                                    .opacity(0.9)
+                                
+                            }
                         }
                     }
                     .sheet(isPresented: $showAddSheet){
@@ -88,7 +80,7 @@ struct HomeView: View {
                     
                     Text("Hinzufügen")
                         .font(.callout)
-                        .padding(5)
+                        .padding(.bottom, 6)
                 }
                 .frame(maxWidth: 180, maxHeight: 190)
                 .background(Color.orange.opacity(0.3))
