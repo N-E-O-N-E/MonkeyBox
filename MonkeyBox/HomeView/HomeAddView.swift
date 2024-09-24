@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeAddView: View {
+    
+    @Environment(\.modelContext) private var context
+    
+    @State private var storageName = ""
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form{
+            Text("Add new Room:")
+            TextField("Name", text: $storageName)
+            
+        }
     }
 }
 

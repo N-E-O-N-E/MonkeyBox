@@ -15,6 +15,8 @@ struct HomeView: View {
     @AppStorage("loginState") private var loginState: Bool = false
     @State private var loginActiv: Bool = false
     
+    @State private var showAddSheet = false
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -59,7 +61,7 @@ struct HomeView: View {
       
                 VStack(alignment:.center) {
                     Button(action: {
-                        
+                        showAddSheet = true
 //                        let newStorage: Storage = Storage(name: "Badroom", image: "MonkeyBoxLogo")
 //                        context.insert(newStorage)
     
@@ -80,6 +82,9 @@ struct HomeView: View {
                             
                         }
                     }
+                    .sheet(isPresented: $showAddSheet){
+                        HomeAddView()
+                    }
                     
                     Text("Hinzufügen")
                         .font(.callout)
@@ -89,6 +94,7 @@ struct HomeView: View {
                 .background(Color.orange.opacity(0.3))
                 .cornerRadius(15)
                 .padding(10)
+                
             }
         }
     }
