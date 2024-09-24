@@ -12,7 +12,7 @@ import SwiftData
 class Item: Identifiable{
     var id: UUID = UUID()
     var name: String
-    var descriptions: String
+    var descriptions: String?
     var image: String
     
     init(name: String, descriptions: String, image: String) {

@@ -12,13 +12,12 @@ import SwiftData
 class Storage: Identifiable{
     var id: UUID = UUID()
     var name: String
-    var descriptions: String
     var image: String
     
-    init(name: String, descriptions: String, image: String) {
+    init(name: String, image: String) {
         self.name = name
-        self.descriptions = descriptions
         self.image = image
     }
     
 }
+

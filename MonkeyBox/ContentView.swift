@@ -9,35 +9,49 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var context
     @AppStorage("loginState") private var loginState: Bool = false
+    
     @State private var isActive: Bool = false
+    
     var body: some View {
         NavigationStack {
             SplashView()
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         isActive = true
                     }
                 }
                 .navigationDestination(isPresented: $isActive) {
                     if loginState {
-                        HomeView()
+                        
+                        TabView {
+                            HomeView()
+                                .tabItem {
+                                    Label("Home", systemImage: "house.fill")
+                                }
+                            
+                            ItemListView()
+                                .tabItem {
+                                    Label("Einträge", systemImage: "doc.fill")
+                                }
+                            
+                            
+                        }.navigationBarBackButtonHidden()
+                        
                     } else {
                         LoginView()
                     }
                 }
-        }
-        .modelContainer(for: [
-            User.self,
-            Item.self,
-            Storage.self
-        ]
-        )
-        
+                
+        }.modelContainer(for: [User.self, Item.self, Storage.self])
     }
 }
-    
+
 
 #Preview {
-    ContentView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, configurations: configuration)
+    return ContentView()
+        .modelContainer(container)
 }
