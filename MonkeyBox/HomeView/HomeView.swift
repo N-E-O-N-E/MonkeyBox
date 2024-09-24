@@ -14,40 +14,48 @@ struct HomeView: View {
     
     @AppStorage("loginState") private var loginState: Bool = false
     
+    @State private var animationOn = false
     @State private var loginActiv: Bool = false
     @State private var showAddSheet = false
+    @State private var selectedItems: [Storage] = []
     
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
+    func delSelectedItems() {
+        for item in selectedItems {
+            if let index = storages.firstIndex(of: item) {
+                context.delete(storages[index])
+            }
+        }
+        selectedItems.removeAll()
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
-                
-                
                 LazyVGrid(columns: columns, spacing: 16) {
-                    
                     ForEach(storages) { item in
                         
                         VStack(alignment:.center) {
-                            
-                            Button(action: {
+                            ZStack {
+                                Image(item.image)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 180, height: 140)
+                                    .cornerRadius(10)
                                 
-                            }) {
-                                ZStack {
-                                    Image(item.image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 180, height: 140)
-                                        .cornerRadius(10)
+                                if selectedItems.contains(where: { $0.id == item.id }) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.pink)
+                                        .font(.system(size: 40))
+                                        .background(Color.white.opacity(1.0))
+                                        .clipShape(Circle())
+                                        .padding(8)
                                 }
-                            }.onLongPressGesture {
-                                print("Test")
                             }
-                            
-                            
                             Text(item.name)
                                 .font(.callout)
                                 .padding(.bottom, 6)
@@ -56,6 +64,28 @@ struct HomeView: View {
                         .background(Color.orange.opacity(0.3))
                         .cornerRadius(15)
                         .padding(10)
+                        
+                        .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
+                        .animation(animationOn ? Animation.easeInOut(duration: 0.2)
+                            .repeatForever(autoreverses: true) : .default, value: animationOn)
+                        
+                        .onLongPressGesture (minimumDuration: 1.0) {
+                            withAnimation {
+                                animationOn = true
+                            }
+                        }
+                        
+                        .onTapGesture {
+                            if animationOn {
+                                withAnimation {
+                                    if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
+                                        selectedItems.remove(at: index)
+                                    } else {
+                                        selectedItems.append(item)
+                                    }
+                                }
+                            }
+                        }
                     }
                     
                     VStack(alignment:.center) {
@@ -75,14 +105,12 @@ struct HomeView: View {
                                         .foregroundStyle(.white)
                                         .font(.system(size: 125))
                                         .opacity(0.9)
-                                    
                                 }
                             }
                         }
                         .sheet(isPresented: $showAddSheet){
                             HomeAddView()
                         }
-                        
                         Text("Hinzufügen")
                             .font(.callout)
                             .padding(.bottom, 6)
@@ -95,9 +123,33 @@ struct HomeView: View {
                 }
                 
                 .toolbar {
-                    Text("123")
-                }.navigationTitle("MonkeyBoxes")
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            //aktion
+                        }) {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundStyle(.blue)
+                        }
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        if !selectedItems.isEmpty {
+                            Button(action: {
+                                delSelectedItems()
+                                withAnimation {
+                                    animationOn = false
+                                    
+                                }
+                            }) {
+                                HStack{
+                                    Image(systemName: "trash")
+                                        .foregroundStyle(.red)
+                                    Text("Selected Items: \(selectedItems.count)").font(.callout)}
+                            }
+                        }
+                    }
+                }
             }
+            .navigationTitle("Monkey Box")
         }
     }
 }
