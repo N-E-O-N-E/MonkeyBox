@@ -21,3 +21,13 @@ class Storage: Identifiable{
     
 }
 
+let storageImages = [
+    "MonkeyBoxBasement",
+    "MonkeyBoxBathroom",
+    "MonkeyBoxGarage",
+    "MonkeyBoxKitchen",
+    "MonkeyBoxLivingRoom",
+    "MonkeyBoxLoft",
+    "MonkeyBoxOutdoor",
+    "MonkeyBoxLogo"
+]
