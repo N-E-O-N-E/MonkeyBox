@@ -43,7 +43,7 @@ struct HomeAddView: View {
                                         .padding(5)
                                         .foregroundStyle(selected ? .white : .black)
                                         .offset(x: 60, y: -60)
-                                        
+                                    
                                 }
                                     
                                     
@@ -55,6 +55,13 @@ struct HomeAddView: View {
                 }
                 .presentationDetents([.fraction(0.6)])
             }
+        Button("Save"){
+            if selectedImage != "" && storageName != "" {
+                let newStorageRoom = Storage(name: storageName, image: selectedImage)
+                context.insert(newStorageRoom)
+            }
+        }
+        
        //Text("\(selectedImage)").font(.callout)
         Spacer()
     }
