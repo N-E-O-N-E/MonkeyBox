@@ -23,30 +23,67 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        
-        ScrollView {
-            
-            LazyVGrid(columns: columns, spacing: 16) {
+        NavigationView {
+            ScrollView {
                 
-                ForEach(storages) { item in
+                
+                LazyVGrid(columns: columns, spacing: 16) {
+                    
+                    ForEach(storages) { item in
+                        
+                        VStack(alignment:.center) {
+                            
+                            Button(action: {
+                                
+                            }) {
+                                ZStack {
+                                    Image(item.image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 180, height: 140)
+                                        .cornerRadius(10)
+                                }
+                            }.onLongPressGesture {
+                                print("Test")
+                            }
+                            
+                            
+                            Text(item.name)
+                                .font(.callout)
+                                .padding(.bottom, 6)
+                        }
+                        .frame(maxWidth: 180, maxHeight: 190)
+                        .background(Color.orange.opacity(0.3))
+                        .cornerRadius(15)
+                        .padding(10)
+                    }
                     
                     VStack(alignment:.center) {
                         Button(action: {
-                            // Aktion
-                            
+                            showAddSheet = true
                         }) {
-                            ZStack {
-                                Image(item.image)
+                            
+                            ZStack(alignment:.center) {
+                                Image("MonkeyBoxLogo")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 180, height: 140)
                                     .cornerRadius(10)
+                                    .blur(radius: 2)
+                                ZStack {
+                                    Image(systemName: "plus.app.fill")
+                                        .foregroundStyle(.white)
+                                        .font(.system(size: 125))
+                                        .opacity(0.9)
+                                    
+                                }
                             }
-                        }.onLongPressGesture(minimumDuration: 2.0) {
-                            
+                        }
+                        .sheet(isPresented: $showAddSheet){
+                            HomeAddView()
                         }
                         
-                        Text(item.name)
+                        Text("Hinzufügen")
                             .font(.callout)
                             .padding(.bottom, 6)
                     }
@@ -54,42 +91,12 @@ struct HomeView: View {
                     .background(Color.orange.opacity(0.3))
                     .cornerRadius(15)
                     .padding(10)
-                }
-                
-                VStack(alignment:.center) {
-                    Button(action: {
-                        showAddSheet = true
-                    }) {
-                        
-                        ZStack(alignment:.center) {
-                            Image("MonkeyBoxLogo")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 180, height: 140)
-                                .cornerRadius(10)
-                                .blur(radius: 2)
-                            ZStack {
-                                Image(systemName: "plus.app.fill")
-                                    .foregroundStyle(.white)
-                                    .font(.system(size: 125))
-                                    .opacity(0.9)
-                                
-                            }
-                        }
-                    }
-                    .sheet(isPresented: $showAddSheet){
-                        HomeAddView()
-                    }
                     
-                    Text("Hinzufügen")
-                        .font(.callout)
-                        .padding(.bottom, 6)
                 }
-                .frame(maxWidth: 180, maxHeight: 190)
-                .background(Color.orange.opacity(0.3))
-                .cornerRadius(15)
-                .padding(10)
                 
+                .toolbar {
+                    Text("123")
+                }.navigationTitle("MonkeyBoxes")
             }
         }
     }
