@@ -8,8 +8,21 @@
 import SwiftUI
 
 struct HomeView: View {
+    @AppStorage("loginState") private var loginState: Bool = false
+    @State private var loginActiv: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack {
+            
+            Button("Abmelden") {
+                loginState = false
+                loginActiv = true
+            }.font(.subheadline)
+            
+        }
+        .navigationDestination(isPresented: $loginActiv) { LoginView() }
+        .navigationBarBackButtonHidden()
     }
 }
 

@@ -8,48 +8,59 @@
 import SwiftUI
 
 struct LoginView: View {
-    
-    @AppStorage("username") private var loginUser: String = ""
-    @AppStorage("password") private var loginPassword: String = ""
     @AppStorage("loginState") private var loginState: Bool = false
+    @State private var loginActiv: Bool = false
+    @State private var registerActiv: Bool = false
+    
+    @State private var inputUsername: String = ""
+    @State private var inputPassword: String = ""
     
     var body: some View {
-       
+        
+        Form {
             VStack(alignment:.leading) {
-                
                 
                 Text("Anmeldung\n").font(.system(size: 40).bold())
                 Text("Bitte Nutzernamen eingeben:")
-                TextField(text: $loginUser) {
+                TextField(text: $inputUsername) {
                     Text("Benutzername")
                 }.textFieldStyle(.roundedBorder)
                 
                 Text("Bitte Passwort eingeben:")
-                SecureField(text: $loginPassword) {
+                SecureField(text: $inputPassword) {
                     Text("Passwort")
                 }.textFieldStyle(.roundedBorder)
                 
-                Text("\nKein Account? Jetzt Registrieren")
-                    .font(.system(size: 10)).underline().foregroundStyle(.blue)
-                
-                
-            }.padding(40)
-        
-        
-        
+            }
             
             Button("Anmelden") {
+                loginActiv = true
                 loginState = true
-            }.frame(width: 120, height: 40)
+                
+            }.frame(width: 130, height: 50)
+                .background(.blue)
+                .foregroundStyle(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            Button("Registrieren") {
+                registerActiv = true
+                
+            }.frame(width: 120, height: 30)
                 .background(.blue)
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
         }
+        .navigationDestination(isPresented: $loginActiv) {
+            HomeView()
+        }
+        .navigationDestination(isPresented: $registerActiv) {
+            RegisterView()
+        }
         
-        
-        
+        .navigationBarBackButtonHidden()
     }
-    
+}
+
 
 
 #Preview {

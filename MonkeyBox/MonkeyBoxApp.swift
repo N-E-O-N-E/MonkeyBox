@@ -13,9 +13,7 @@ struct MonkeyBoxApp: App {
     var body: some Scene {
         
         WindowGroup {
-          
             SplashView()
-
         }
     }
 }
