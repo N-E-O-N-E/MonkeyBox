@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RegisterView: View {
+    
+    @Environment(\.modelContext) private var context
     
     @AppStorage("loginState") private var loginState: Bool = false
     @State private var loginActiv: Bool = false
@@ -15,41 +18,63 @@ struct RegisterView: View {
     @State private var inputUsername: String = ""
     @State private var inputPassword: String = ""
     @State private var inputPasswordConfirm: String = ""
+    
+    @State private var showAlert = false
 
     var body: some View {
         
         Form {
             VStack(alignment:.leading) {
                 
-                Text("Registrierung\n").font(.system(size: 40).bold())
-                Text("Nutzernamen vergeben:")
+                Text("Create Account\n").font(.system(size: 40).bold())
+                Text("Enter Username")
                 TextField(text: $inputUsername) {
-                    Text("Benutzername")
-                }.textFieldStyle(.roundedBorder)
+                    Text("Username")
+                }
+                .textFieldStyle(.roundedBorder)
                 
-                Text("Passwort vergeben:")
+                Text("Enter Password:")
                 SecureField(text: $inputPassword) {
-                    Text("Passwort")
-                }.textFieldStyle(.roundedBorder)
-                Text("Passwort bestätigen:")
+                    Text("Password")
+                }
+                .textFieldStyle(.roundedBorder)
+                Text("Confirm Password:")
                 SecureField(text: $inputPasswordConfirm) {
-                    Text("Passwort")
-                }.textFieldStyle(.roundedBorder)
-                
+                    Text("Password")
+                }
+                .textFieldStyle(.roundedBorder)
+                if inputPassword != inputPasswordConfirm {
+                    Text("Password doesnt match")
+                        .foregroundStyle(.red)
+                }
             }
             
-            Button("Registrieren") {
-                loginActiv = true
+            Button("Create") {
+                if inputPassword != inputPasswordConfirm && !inputUsername.isEmpty {
+                    showAlert = true
+                    
+                } else {
+                    let newUser = User(userName: inputUsername, password: inputPassword)
+                    context.insert(newUser)
+                    inputUsername = ""
+                    inputPassword = ""
+                    inputPasswordConfirm = ""
+                    loginState = true
+                }
                 
             }.frame(width: 120, height: 40)
                 .background(.blue)
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-            
+                .alert("Attention you gave a wrong input.", isPresented: $showAlert){
+                    Button("Ok"){
+                        showAlert = false
+                    }
+                }
             
         }
-        .navigationDestination(isPresented: $loginActiv) {
-            LoginView()
+        .navigationDestination(isPresented: $loginState) {
+            HomeView()
         }
         
         .navigationBarBackButtonHidden()

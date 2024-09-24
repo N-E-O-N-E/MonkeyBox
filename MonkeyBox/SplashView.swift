@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct SplashView: View {
-    @AppStorage("loginState") private var loginState: Bool = false
-    @State private var isActive: Bool = false
+    
     
     var body: some View {
-        NavigationStack {
+        
             ZStack {
                 Color(.brown)
                     .ignoresSafeArea()
@@ -34,21 +33,7 @@ struct SplashView: View {
                         .foregroundStyle(.white)
                         .shadow(radius: 4)
                 }
-                
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    isActive = true
-                }
-            }
-            .navigationDestination(isPresented: $isActive) {
-                if loginState {
-                    HomeView()
-                } else {
-                    LoginView()
-                }
-            }
-        }
     }
 }
 
