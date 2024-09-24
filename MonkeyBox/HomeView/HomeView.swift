@@ -13,8 +13,8 @@ struct HomeView: View {
     @Query var storages: [Storage]
     
     @AppStorage("loginState") private var loginState: Bool = false
-    @State private var loginActiv: Bool = false
     
+    @State private var loginActiv: Bool = false
     @State private var showAddSheet = false
     
     let columns = [
@@ -42,7 +42,10 @@ struct HomeView: View {
                                     .frame(width: 180, height: 140)
                                     .cornerRadius(10)
                             }
+                        }.onLongPressGesture(minimumDuration: 2.0) {
+                            
                         }
+                        
                         Text(item.name)
                             .font(.callout)
                             .padding(.bottom, 6)
