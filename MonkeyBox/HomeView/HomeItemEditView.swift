@@ -8,19 +8,32 @@ struct HomeItemEditView: View {
     
     @State private var storageName = ""
     @State private var selectedImage = ""
+    @State private var newStorageName = ""
     
     let selectedItem: Storage?
+    @State var saveAlert: Bool = false
     
     
     var body: some View {
         Form {
-            Text("Edit Room").font(.title2).bold()
-            TextField(selectedItem!.name, text: $storageName)
+            Text("Edit Room - \(selectedItem!.name)").font(.title2).bold()
+            TextField("New name here...", text: $storageName)
+            
             Button("Save Changes "){
-                selectedItem?.name = storageName
-                selectedItem?.image = selectedImage
+                if !storageName.isEmpty {
+                    selectedItem?.name = storageName
+                    selectedItem?.image = selectedImage
+
+                }else {
+                    saveAlert = true
+                }
+            }.alert("Please enter new Name", isPresented: $saveAlert) {
+                Button("OK"){
+                    saveAlert = false
+                }
             }
-        }.frame(height: 190)
+            
+        }.multilineTextAlignment(.leading).frame(height: 210)
         
         ScrollView(.horizontal) {
             HStack {
@@ -46,6 +59,16 @@ struct HomeItemEditView: View {
                                     .foregroundStyle(selected ? .pink : .black)
                                     .scaleEffect(1.5)
                             }
+                            if image == selectedItem!.image {
+                                let selected = true
+                                Circle()
+                                    .fill(.white)
+                                    .frame(width: 30, height: 30)
+                                Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+                                    .padding(5)
+                                    .foregroundStyle(selected ? .gray : .black)
+                                    .scaleEffect(1.5)
+                            }
                         }
                     }.padding(8)
                 }
@@ -56,7 +79,5 @@ struct HomeItemEditView: View {
         Spacer()
     }
 }
-//
-//#Preview {
-//  HomeItemEditView()
-//}
+
+
