@@ -70,5 +70,8 @@ struct HomeAddView: View {
 
 
 #Preview {
-    HomeAddView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return HomeAddView()
+        .modelContainer(container)
 }

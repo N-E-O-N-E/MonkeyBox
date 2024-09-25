@@ -71,6 +71,10 @@ struct SettingsView: View {
         
     }
 }
+
 #Preview {
-    SettingsView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return SettingsView()
+        .modelContainer(container)
 }

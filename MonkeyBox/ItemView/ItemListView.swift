@@ -50,5 +50,8 @@ struct ItemListView: View {
 }
 
 #Preview {
-    ItemListView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return ItemListView()
+        .modelContainer(container)
 }

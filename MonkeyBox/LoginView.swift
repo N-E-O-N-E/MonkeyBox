@@ -62,15 +62,16 @@ struct LoginView: View {
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             
-            .navigationDestination(isPresented: $loginState) {
-                HomeView()
-            }
-            .navigationDestination(isPresented: $registerActiv) {
-                RegisterView()
-            }
             
-            .navigationBarBackButtonHidden()
         }
+        .navigationDestination(isPresented: $loginState) {
+            HomeView()
+        }
+        .navigationDestination(isPresented: $registerActiv) {
+            RegisterView()
+        }
+        .navigationBarBackButtonHidden()
+        
     }
     func loginCheck() {
         
@@ -87,5 +88,8 @@ struct LoginView: View {
 
 
 #Preview {
-    LoginView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return LoginView()
+        .modelContainer(container)
 }

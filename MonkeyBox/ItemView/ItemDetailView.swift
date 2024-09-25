@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ItemDetailView: View {
     var body: some View {
@@ -14,5 +15,8 @@ struct ItemDetailView: View {
 }
 
 #Preview {
-    ItemDetailView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return ItemDetailView()
+        .modelContainer(container)
 }

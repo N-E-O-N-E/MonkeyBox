@@ -16,7 +16,7 @@ struct ItemAddView: View {
     @State private var itemName = ""
     @State private var itemDescription = ""
     @State private var itemCategory: Storage?
-    @State private var itemImage = ""
+    @State private var itemImage = "Datei_1"
     @State private var itemDate = Date()
     
     let columns = [
@@ -91,5 +91,8 @@ struct ItemAddView: View {
 }
 
 #Preview {
-    ItemAddView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return ItemAddView()
+        .modelContainer(container)
 }

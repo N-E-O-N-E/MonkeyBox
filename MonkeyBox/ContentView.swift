@@ -41,7 +41,7 @@ struct ContentView: View {
                                     }
                                     .tag(3)
                                     
-                            }.navigationBarBackButtonHidden()
+                            }
                             
                         } else {
                             LoginView()
@@ -54,6 +54,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden()
             .modelContainer(for: [User.self, Item.self, Storage.self])
         }
     }

@@ -39,5 +39,8 @@ struct SplashView: View {
 }
 
 #Preview {
-    SplashView()
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return SplashView()
+        .modelContainer(container)
 }
