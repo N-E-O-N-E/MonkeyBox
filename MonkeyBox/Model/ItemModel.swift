@@ -15,12 +15,14 @@ class Item: Identifiable{
     var descriptions: String?
     var image: String
     var storage: Storage?
+    var date: Date
         
-    init (name: String, descriptions: String? = nil, image: String, storage: Storage? = nil){
+    init (name: String, descriptions: String? = nil, image: String, storage: Storage? = nil, date: Date){
         self.name = name
         self.descriptions = descriptions
         self.image = image
         self.storage = storage
+        self.date = date
     }
 }
 

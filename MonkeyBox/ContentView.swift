@@ -25,13 +25,13 @@ struct ContentView: View {
                         TabView(selection: $selectedTab) {
                             HomeView()
                                 .tabItem {
-                                    Label("Home", systemImage: "house.fill")
+                                    Label("Storages", systemImage: "house.fill")
                                 }
                                 .tag(1)
                                
                             ItemListView()
                                 .tabItem {
-                                    Label("Einträge", systemImage: "doc.fill")
+                                    Label("Items", systemImage: "doc.fill")
                                 }
                                 .tag(2)
                                 
@@ -50,7 +50,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     isActive = true
                 }
             }

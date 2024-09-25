@@ -130,25 +130,20 @@ struct HomeView: View {
                 
             }
             .toolbar {
+            
                 ToolbarItem(placement: .topBarTrailing) {
                    
                         Button(action: {
-                            //aktion
+                            showEditSheet = true
+                            
                         }) {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundStyle(.blue)
-                        }
-                    }
-                
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                   
-                        Button(action: {
-                            //aktion
-                        }) {
+                            Text("Item ")
                             Image(systemName: "plus.app")
                                 .foregroundStyle(.blue)
                             
+                        }
+                        .sheet(isPresented: $showEditSheet){
+                            ItemAddView()
                         }
                     }
                 

@@ -51,7 +51,7 @@ struct HomeItemEditView: View {
       }.padding(10)
       .presentationDetents([.fraction(0.6)])
     }
-    //Text("\(selectedImage)").font(.callout)
+   
     Spacer()
   }
 }

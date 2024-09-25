@@ -14,57 +14,83 @@ struct ItemAddView: View {
     @Environment(\.modelContext) private var context
     
     @State private var itemName = ""
+    @State private var itemDescription = ""
+    @State private var itemCategory: Storage?
     @State private var itemImage = ""
+    @State private var itemDate = Date()
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     
     var body: some View {
         Form {
-            Text("Add new Item:")
-            TextField("Name", text: $itemName)
+            HStack{
+                Text("Add Item ").font(.title).bold()
+                Image(itemImage)
+            }
             
-            Button("Save"){
+            TextField("Name", text: $itemName)
+            TextField("Description", text: $itemDescription)
+            //Picker("Category", text: $itemCategory)
+            
+            Button("Save Item"){
                 if itemImage != "" && itemName != "" {
-                    let newItem = Storage(name: itemName, image: itemImage)
+                    
+                    let newItem = Item(name: itemName, descriptions: itemDescription,
+                                       image: itemImage, storage: itemCategory, date: Date())
                     context.insert(newItem)
                 }
             }
             
-        }.frame(height: 190)
+        }.frame(height: 230)
         
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(storageImages, id: \.self) { image in
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(itemImages, id: \.self) { image in
                     
                     Button(action: {
                         itemImage = ""
                         itemImage = image
                     }) {
-                        ZStack(alignment:.topTrailing) {
+                        ZStack {
                             Image(image)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 150, height: 150)
-                                .border(.brown)
-                                .shadow(radius: 2)
-                                
+                                .frame(width: 34, height: 34)
+                                .border(.black)
+                            
+                            
                             
                             if image == itemImage {
                                 let selected = true
-  
+                                
                                 Circle()
                                     .fill(.white)
-                                    .frame(width: 30, height: 30)
+                                    .frame(width: 28, height: 28)
+                                
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                                     .padding(5)
-                                    .foregroundStyle(selected ? .pink : .black)
-                                    .scaleEffect(1.5)
+                                    .foregroundStyle(selected ? .green : .black)
+                                    .scaleEffect(1)
                             }
                         }
                     }.padding(8)
                 }
-            }.padding(10)
-            .presentationDetents([.fraction(0.6)])
+            }
+            .presentationDetents([.fraction(0.8)])
         }
-        //Text("\(selectedImage)").font(.callout)
+        
         Spacer()
     }
 }

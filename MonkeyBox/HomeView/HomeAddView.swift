@@ -17,7 +17,7 @@ struct HomeAddView: View {
     
     var body: some View {
         Form {
-            Text("Add new Room:")
+            Text("Add Storage").font(.title).bold()
             TextField("Name", text: $storageName)
             
             Button("Save"){
@@ -63,7 +63,7 @@ struct HomeAddView: View {
             }.padding(10)
             .presentationDetents([.fraction(0.6)])
         }
-        //Text("\(selectedImage)").font(.callout)
+        
         Spacer()
     }
 }
