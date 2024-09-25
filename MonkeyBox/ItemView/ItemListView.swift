@@ -2,15 +2,57 @@
 //  ItemListView.swift
 //  MonkeyBox
 //
-//  Created by Markus Wirtz on 23.09.24.
+//  Created by Affiger Milan on 23.09.24.
 //
-
+import SwiftData
 import SwiftUI
 
 struct ItemListView: View {
+    
+    @Environment(\.modelContext) private var context
+    
+    @State private var items: [Item] = [
+        .init(name: "Test1", image: "Datei_10"),
+        .init(name: "Test2", image: "Datei_11")
+    ]
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        // Stack?
+        NavigationView{
+            List{
+                ForEach(items) { item in
+                    VStack(alignment: .leading) {
+                        HStack{
+                            Image(item.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 34, height: 34)
+                            Text(item.name)
+                                .font(.headline)
+                        }
+                    }
+                    .swipeActions{
+                        Button(role: .destructive, action: {items.removeAll(where: {$0.id == item.id})}, label: {Text("Entfernen")})
+                        
+                    }
+                }
+            }
+            
+            .toolbar{
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        //aktion
+                    }) {
+                        Image(systemName: "plus.app")
+                            .foregroundStyle(.blue)
+                        
+                    }
+                }
+            }
+        }
     }
+    
 }
 
 #Preview {

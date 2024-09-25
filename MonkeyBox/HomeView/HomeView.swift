@@ -35,6 +35,7 @@ struct HomeView: View {
     }
     
     var body: some View {
+        // Stack?
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {

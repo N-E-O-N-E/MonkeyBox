@@ -14,6 +14,10 @@ class Storage: Identifiable{
     var name: String
     var image: String
     
+    @Relationship(inverse: \Item.storage)
+    var items: [Item] = []
+
+    
     init(name: String, image: String) {
         self.name = name
         self.image = image
