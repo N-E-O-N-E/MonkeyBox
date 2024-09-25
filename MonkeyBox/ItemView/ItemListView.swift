@@ -18,8 +18,8 @@ struct ItemListView: View {
     
     
     var body: some View {
-        // Stack?
-        NavigationView{
+
+        
             List{
                 ForEach(items) { item in
                     VStack(alignment: .leading) {
@@ -37,19 +37,6 @@ struct ItemListView: View {
                         
                     }
                 }
-            }
-            
-            .toolbar{
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        //aktion
-                    }) {
-                        Image(systemName: "plus.app")
-                            .foregroundStyle(.blue)
-                        
-                    }
-                }
-            }
         }
     }
     

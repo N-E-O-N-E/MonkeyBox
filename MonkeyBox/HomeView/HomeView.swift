@@ -35,85 +35,35 @@ struct HomeView: View {
     }
     
     var body: some View {
-        // Stack?
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(storages) { item in
-                        
-                        VStack(alignment:.center) {
-                            ZStack {
-                                Image(item.image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 180, height: 140)
-                                    .cornerRadius(10)
-                                
-                                if selectedItems.contains(where: { $0.id == item.id }) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.pink)
-                                        .font(.system(size: 40))
-                                        .background(Color.white.opacity(1.0))
-                                        .clipShape(Circle())
-                                        .padding(8)
-                                }
-                            }
-                            Text(item.name)
-                                .font(.callout)
-                                .padding(.bottom, 6)
-                        }
-                        .frame(maxWidth: 180, maxHeight: 190)
-                        .background(Color.orange.opacity(0.3))
-                        .cornerRadius(15)
-                        .padding(10)
-                        
-                        .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
-                        .animation(animationOn ? Animation.easeInOut(duration: 0.2)
-                            .repeatForever(autoreverses: true) : .default, value: animationOn)
-                        
-                        .onLongPressGesture (minimumDuration: 1.0) {
-                            withAnimation {
-                                animationOn = true
-                            }
-                        }
-                        
-                        .onTapGesture {
-                            if animationOn {
-                                withAnimation {
-                                    if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
-                                        selectedItems.remove(at: index)
-                                    } else {
-                                        selectedItems.append(item)
-                                    }
-                                }
-                            }
-                        }
-                    }
+        ScrollView {
+            HStack {
+                Text("MonkeyBox").font(.system(size: 40)).bold()
+                    .padding(10)
+                
+                Spacer()
+            }
+            
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(storages) { item in
                     
                     VStack(alignment:.center) {
-                        Button(action: {
-                            showAddSheet = true
-                        }) {
+                        ZStack {
+                            Image(item.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 180, height: 140)
+                                .cornerRadius(10)
                             
-                            ZStack(alignment:.center) {
-                                Image("MonkeyBoxLogo")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 180, height: 140)
-                                    .cornerRadius(10)
-                                    .blur(radius: 2)
-                                ZStack {
-                                    Image(systemName: "plus.app.fill")
-                                        .foregroundStyle(.white)
-                                        .font(.system(size: 125))
-                                        .opacity(0.9)
-                                }
+                            if selectedItems.contains(where: { $0.id == item.id }) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.pink)
+                                    .font(.system(size: 40))
+                                    .background(Color.white.opacity(1.0))
+                                    .clipShape(Circle())
+                                    .padding(8)
                             }
                         }
-                        .sheet(isPresented: $showAddSheet){
-                            HomeAddView()
-                        }
-                        Text("Hinzufügen")
+                        Text(item.name)
                             .font(.callout)
                             .padding(.bottom, 6)
                     }
@@ -121,10 +71,67 @@ struct HomeView: View {
                     .background(Color.orange.opacity(0.3))
                     .cornerRadius(15)
                     .padding(10)
+                    
+                    .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
+                    .animation(animationOn ? Animation.easeInOut(duration: 0.2)
+                        .repeatForever(autoreverses: true) : .default, value: animationOn)
+                    
+                    .onLongPressGesture (minimumDuration: 1.0) {
+                        withAnimation {
+                            animationOn = true
+                        }
+                    }
+                    
+                    .onTapGesture {
+                        if animationOn {
+                            withAnimation {
+                                if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
+                                    selectedItems.remove(at: index)
+                                } else {
+                                    selectedItems.append(item)
+                                }
+                            }
+                        }
+                    }
                 }
                 
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
+                VStack(alignment:.center) {
+                    Button(action: {
+                        showAddSheet = true
+                    }) {
+                        
+                        ZStack(alignment:.center) {
+                            Image("MonkeyBoxLogo")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 180, height: 140)
+                                .cornerRadius(10)
+                                .blur(radius: 2)
+                            ZStack {
+                                Image(systemName: "plus.app.fill")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 125))
+                                    .opacity(0.9)
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $showAddSheet){
+                        HomeAddView()
+                    }
+                    Text("Hinzufügen")
+                        .font(.callout)
+                        .padding(.bottom, 6)
+                }
+                .frame(maxWidth: 180, maxHeight: 190)
+                .background(Color.orange.opacity(0.3))
+                .cornerRadius(15)
+                .padding(10)
+                
+                
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                   
                         Button(action: {
                             //aktion
                         }) {
@@ -132,57 +139,69 @@ struct HomeView: View {
                                 .foregroundStyle(.blue)
                         }
                     }
-                    ToolbarItem(placement: .topBarLeading) {
-                        if !selectedItems.isEmpty {
+                
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                   
+                        Button(action: {
+                            //aktion
+                        }) {
+                            Image(systemName: "plus.app")
+                                .foregroundStyle(.blue)
                             
-                            HStack {
-                                Button(action: {
-                                    withAnimation {
+                        }
+                    }
+                
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    if !selectedItems.isEmpty {
+                        
+                        HStack {
+                            Button(action: {
+                                withAnimation {
+                                    animationOn = false
+                                    selectedItems.removeAll()
+                                    
+                                }
+                            }) {
+                                HStack{
+                                    Image(systemName: "xmark.square")
+                                        .foregroundStyle(.black)
+                                }
+                            }
+                            
+                            Button(action: {
+                                delSelectedItems()
+                                withAnimation {
+                                    animationOn = false
+                                    
+                                }
+                            }) {
+                                HStack{
+                                    Image(systemName: "trash")
+                                        .foregroundStyle(.red)
+                                    Text("Selected: \(selectedItems.count)").font(.callout)}
+                            }
+                            
+                            Button(action: {
+                                withAnimation {
+                                    if selectedItems.count == 1{
+                                        showEditSheet = true
                                         animationOn = false
-                                        selectedItems.removeAll()
-                                        
-                                    }
-                                }) {
-                                    HStack{
-                                        Image(systemName: "xmark.square")
-                                            .foregroundStyle(.black)
                                     }
                                 }
-                                
-                                Button(action: {
-                                    delSelectedItems()
-                                    withAnimation {
-                                        animationOn = false
-                                        
-                                    }
-                                }) {
-                                    HStack{
-                                        Image(systemName: "trash")
-                                            .foregroundStyle(.red)
-                                        Text("Selected: \(selectedItems.count)").font(.callout)}
-                                }
-                                
-                                Button(action: {
-                                    withAnimation {
-                                        if selectedItems.count == 1{
-                                            showEditSheet = true
-                                            animationOn = false
-                                        }
-                                    }
-                                }) {
-                                    HStack{
-                                        Image(systemName: "square.and.pencil")
-                                            .foregroundStyle(.blue)
-                                    }.sheet(isPresented: $showEditSheet){
-                                        HomeItemEditView(selectedItem: selectedItems.first)
-                                    }
+                            }) {
+                                HStack{
+                                    Image(systemName: "square.and.pencil")
+                                        .foregroundStyle(.blue)
+                                }.sheet(isPresented: $showEditSheet){
+                                    HomeItemEditView(selectedItem: selectedItems.first)
                                 }
                             }
                         }
                     }
                 }
             }
-            .navigationTitle("Monkey Box")
         }
     }
 }

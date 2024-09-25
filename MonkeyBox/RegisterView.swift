@@ -14,7 +14,7 @@ struct RegisterView: View {
     
     @AppStorage("loginState") private var loginState: Bool = false
     @State private var loginActiv: Bool = false
-    
+
     @State private var inputUsername: String = ""
     @State private var inputPassword: String = ""
     @State private var inputPasswordConfirm: String = ""
