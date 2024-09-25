@@ -163,15 +163,17 @@ struct HomeView: View {
                                 
                                 Button(action: {
                                     withAnimation {
-                                        showEditSheet = true
-                                        animationOn = false
+                                        if selectedItems.count == 1{
+                                            showEditSheet = true
+                                            animationOn = false
+                                        }
                                     }
                                 }) {
                                     HStack{
                                         Image(systemName: "square.and.pencil")
                                             .foregroundStyle(.blue)
                                     }.sheet(isPresented: $showEditSheet){
-                                        HomeItemEditView()
+                                        HomeItemEditView(selectedItem: selectedItems.first)
                                     }
                                 }
                             }
