@@ -66,9 +66,7 @@ struct ItemAddView: View {
                                 .scaledToFill()
                                 .frame(width: 64, height: 64)
                                 .border(.black)
-                            
-                            
-                            
+
                             if image == itemImage {
                                 let selected = true
                                 
@@ -79,7 +77,7 @@ struct ItemAddView: View {
                                 Image(systemName: selected ? "checkmark.circle.fill" : "circle")
                                     .padding(5)
                                     .foregroundStyle(selected ? .green : .black)
-                                    .scaleEffect(1)
+                                    .scaleEffect(1.4)
                             }
                         }
                     }.padding(8)

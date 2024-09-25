@@ -55,7 +55,8 @@ struct ContentView: View {
                 }
             }
             
-        }.modelContainer(for: [User.self, Item.self, Storage.self])
+        }
+        .modelContainer(for: [User.self, Item.self, Storage.self])
     }
 }
 

@@ -21,3 +21,15 @@ class User: Identifiable{
         self.profileImage = profileImage
     }
 }
+
+let userProfileImages = [
+    "Kongtainer",
+    "Datei_23",
+    "Datei_45",
+    "Datei_12",
+    "Datei_3",
+    "Datei_42",
+    "Datei_62",
+    "Datei_72",
+    "Datei_56",
+]
