@@ -24,7 +24,7 @@ struct ItemListView: View {
                             Image(item.image)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 34, height: 34)
+                                .frame(width: 40, height: 40)
                             
                             VStack(alignment: .leading) {
                                 Text(item.name)
@@ -33,7 +33,7 @@ struct ItemListView: View {
                                     .font(.caption2)
                             }
                         }
-                    }.frame(height: 40)
+                    }.frame(height: 45)
                     .swipeActions{
                         Button("Löschen", role: .destructive) {
                             if let index = items.firstIndex(of: item) {

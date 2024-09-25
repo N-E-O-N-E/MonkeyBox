@@ -24,11 +24,6 @@ struct ItemAddView: View {
         GridItem(.flexible()),
         GridItem(.flexible()),
         GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
         GridItem(.flexible())
     ]
     
@@ -38,7 +33,9 @@ struct ItemAddView: View {
             HStack{
                 Text("Add Item ").font(.title).bold()
                 Image(itemImage)
-            }
+                    .resizable()
+                    .frame(width: 36, height: 36)
+            }.frame(height: 40)
             
             TextField("Name", text: $itemName)
             TextField("Description", text: $itemDescription)
@@ -67,7 +64,7 @@ struct ItemAddView: View {
                             Image(image)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 34, height: 34)
+                                .frame(width: 64, height: 64)
                                 .border(.black)
                             
                             
