@@ -8,19 +8,24 @@ struct HomeItemEditView: View {
     
   @State private var storageName = ""
   @State private var selectedImage = ""
-        
-         let selectedItem: Storage?
+
+    let selectedItem: Storage?
 
 
   var body: some View {
-    Form {
-      Text("Edit room:")
-        TextField("\(selectedItem!.name)", text: $storageName)
-      Button("save"){
-          selectedItem?.name = storageName
-          selectedItem?.image = selectedImage
-      }
-    }.frame(height: 190)
+      
+          Form {
+              Text("Edit Room").font(.title2).bold()
+              VStack{
+                  TextField("\(selectedItem!.name)", text: $storageName)
+
+              }
+              Button("Save Changes "){
+                  selectedItem?.name = storageName
+                  selectedItem?.image = selectedImage
+              }
+          }.frame(height: 190)
+      
     ScrollView(.horizontal) {
       HStack {
         ForEach(storageImages, id: \.self) { image in

@@ -54,7 +54,8 @@ struct ContentView: View {
                     isActive = true
                 }
             }
-        } .modelContainer(for: [User.self, Item.self, Storage.self])
+            
+        }.modelContainer(for: [User.self, Item.self, Storage.self])
     }
 }
 

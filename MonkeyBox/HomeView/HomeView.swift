@@ -18,6 +18,7 @@ struct HomeView: View {
     @State private var loginActiv: Bool = false
     @State private var showAddSheet = false
     @State private var showEditSheet = false
+    @State private var showItemEditSheet = false
     @State private var selectedItems: [Storage] = []
     
     let columns = [
@@ -134,7 +135,7 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                    
                         Button(action: {
-                            showEditSheet = true
+                            showItemEditSheet = true
                             
                         }) {
                             Text("Item ")
@@ -142,7 +143,7 @@ struct HomeView: View {
                                 .foregroundStyle(.blue)
                             
                         }
-                        .sheet(isPresented: $showEditSheet){
+                        .sheet(isPresented: $showItemEditSheet){
                             ItemAddView()
                         }
                     }
