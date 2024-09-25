@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("loginState") private var loginState: Bool = false
     
-    @State private var selectedTab: Int = 1
+    @State private var selectedTab: Int = 0
     @State private var isActive: Bool = false
     
     var body: some View {
@@ -50,7 +50,7 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     isActive = true
                 }
             }
