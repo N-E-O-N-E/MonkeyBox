@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var animationOn = false
     @State private var loginActiv: Bool = false
     @State private var showAddSheet = false
+    @State private var showEditSheet = false
     @State private var selectedItems: [Storage] = []
     
     let columns = [
@@ -119,7 +120,6 @@ struct HomeView: View {
                     .background(Color.orange.opacity(0.3))
                     .cornerRadius(15)
                     .padding(10)
-                    
                 }
                 
                 .toolbar {
@@ -133,17 +133,47 @@ struct HomeView: View {
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         if !selectedItems.isEmpty {
-                            Button(action: {
-                                delSelectedItems()
-                                withAnimation {
-                                    animationOn = false
-                                    
+                            
+                            HStack {
+                                Button(action: {
+                                    withAnimation {
+                                        animationOn = false
+                                        selectedItems.removeAll()
+                                        
+                                    }
+                                }) {
+                                    HStack{
+                                        Image(systemName: "xmark.square")
+                                            .foregroundStyle(.black)
+                                    }
                                 }
-                            }) {
-                                HStack{
-                                    Image(systemName: "trash")
-                                        .foregroundStyle(.red)
-                                    Text("Selected Items: \(selectedItems.count)").font(.callout)}
+                                
+                                Button(action: {
+                                    delSelectedItems()
+                                    withAnimation {
+                                        animationOn = false
+                                        
+                                    }
+                                }) {
+                                    HStack{
+                                        Image(systemName: "trash")
+                                            .foregroundStyle(.red)
+                                        Text("Selected: \(selectedItems.count)").font(.callout)}
+                                }
+                                
+                                Button(action: {
+                                    withAnimation {
+                                        showEditSheet = true
+                                        animationOn = false
+                                    }
+                                }) {
+                                    HStack{
+                                        Image(systemName: "square.and.pencil")
+                                            .foregroundStyle(.blue)
+                                    }.sheet(isPresented: $showEditSheet){
+                                        HomeItemEditView()
+                                    }
+                                }
                             }
                         }
                     }
