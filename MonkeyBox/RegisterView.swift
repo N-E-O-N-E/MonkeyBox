@@ -59,6 +59,7 @@ struct RegisterView: View {
                     inputPassword = ""
                     inputPasswordConfirm = ""
                     loginState = true
+                    
                 }
                 
             }.frame(width: 120, height: 40)
