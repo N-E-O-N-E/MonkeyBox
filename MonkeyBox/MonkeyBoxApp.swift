@@ -15,6 +15,7 @@ struct MonkeyBoxApp: App {
         
         WindowGroup {
             ContentView()
+                .modelContainer(for: [User.self, Item.self, Storage.self])
         }
     }
 }

@@ -13,7 +13,7 @@ struct RegisterView: View {
     @Environment(\.modelContext) private var context
     
     @AppStorage("loginState") private var loginState: Bool = false
-    @State private var loginActiv: Bool = false
+//    @State private var loginActiv: Bool = false
 
     @State private var inputUsername: String = ""
     @State private var inputPassword: String = ""
@@ -59,9 +59,7 @@ struct RegisterView: View {
                     inputPassword = ""
                     inputPasswordConfirm = ""
                     loginState = true
-                    
                 }
-                
             }.frame(width: 120, height: 40)
                 .background(.blue)
                 .foregroundStyle(.white)
@@ -73,11 +71,6 @@ struct RegisterView: View {
                 }
             
         }
-        .navigationDestination(isPresented: $loginState) {
-            HomeView()
-        }
-        
-        .navigationBarBackButtonHidden()
     }
 }
 

@@ -14,7 +14,7 @@ struct LoginView: View {
     
     @AppStorage("loginState") private var loginState: Bool = false
     
-    @State private var registerActiv: Bool = false
+//    @State private var registerActiv: Bool = false
     @State private var showAlert = false
     
     @State private var inputUsername: String = ""
@@ -41,8 +41,6 @@ struct LoginView: View {
             
             Button("Anmelden") {
                 loginCheck()
-               
-                
             }
             .frame(width: 130, height: 50)
             .background(.blue)
@@ -54,24 +52,22 @@ struct LoginView: View {
                 }
                 
             }
-            Button("Registrieren") {
-                registerActiv = true
-                
-            }.frame(width: 120, height: 30)
-                .background(.blue)
-                .foregroundStyle(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-            
+
+            NavigationLink(destination: RegisterView(), label: {
+                Text("Registrieren")
+            })
+
+//            NavigationLink("Registrieren") {
+//                registerActiv = true
+//                
+//            }.frame(width: 120, height: 30)
+//                .background(.blue)
+//                .foregroundStyle(.white)
+//                .clipShape(RoundedRectangle(cornerRadius: 10))
         }
-        .navigationDestination(isPresented: $loginState) {
-            HomeView()
-        }
-        .navigationDestination(isPresented: $registerActiv) {
-            RegisterView()
-        }
-        .navigationBarBackButtonHidden()
-        
+//        .navigationDestination(isPresented: $registerActiv) {
+//            RegisterView()
+//        }
     }
     func loginCheck() {
         

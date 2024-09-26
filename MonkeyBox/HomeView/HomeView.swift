@@ -12,7 +12,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     @Query var storages: [Storage]
     
-    @AppStorage("loginState") private var loginState: Bool = false
+//    @AppStorage("loginState") private var loginState: Bool = false
     
     @State private var animationOn = false
     @State private var loginActiv: Bool = false
