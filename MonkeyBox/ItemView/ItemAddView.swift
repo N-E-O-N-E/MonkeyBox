@@ -3,12 +3,14 @@ import SwiftData
 struct ItemAddView: View {
     @Environment(\.modelContext) private var context
     @Query var storages: [Storage]
+    
+    
     @State private var itemName = ""
     @State private var itemDescription = ""
-    @State private var itemImage = ""
+    @State private var itemImage = "Datei_1"
     @State private var itemDate = Date()
+    @State private var itemQuantity = 1
     @State private var selectedStorage: Storage?
-    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -26,20 +28,52 @@ struct ItemAddView: View {
             }.frame(height: 40)
             TextField("Name", text: $itemName)
             TextField("Description", text: $itemDescription)
+            
+                Button(action: {
+                    if itemQuantity > 1 {
+                        itemQuantity -= 1
+                    }
+                }){
+                    Text("-")
+                        .frame(width: 15, height: 5)
+                        .font(.title)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        
+                }
+                
+                
+                
+                Button(action: {
+                    if itemQuantity >= 1 {
+                        itemQuantity += 1
+                    }
+                }){
+                    Text("+")
+                        .frame(width: 15, height: 5)
+                        .font(.title)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        
+                }
+            
+            Text("Anzahl: \(itemQuantity)")
+            
+            
             Picker("Storage", selection: $selectedStorage) {
                 if !storages.isEmpty {
                     ForEach(storages){ storage in
                         Text(storage.name).tag(storage)
                     }
                 }
-                
             }
             Button("Save Item") {
                 if !itemImage.isEmpty && !itemName.isEmpty && selectedStorage != nil {
                     let newItem = Item(name: itemName, descriptions: itemDescription,
-                                       image: itemImage, storage: selectedStorage, date: itemDate)
+                                       image: itemImage, storage: selectedStorage, date: itemDate, quantity: itemQuantity)
                     context.insert(newItem)
-                    
                 }
             }
         }.frame(height: 280)

@@ -35,6 +35,12 @@ struct ItemListView: View {
                                 Text("\(item.date.formatted(date: .abbreviated, time: .omitted))")
                                     .font(.caption2)
                             }
+                            Spacer()
+                            
+                            Text("\(item.quantity)")
+                                .font(.subheadline)
+                                .padding(10)
+                            
                         }
                     }.frame(height: 45)
                     .swipeActions{

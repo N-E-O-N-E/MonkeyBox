@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-
 @Model
 class Item: Identifiable{
     var id: UUID = UUID()
@@ -16,13 +15,14 @@ class Item: Identifiable{
     var image: String
     var storage: Storage?
     var date: Date
-        
-    init (name: String, descriptions: String? = nil, image: String, storage: Storage? = nil, date: Date){
+    var quantity: Int = 1
+    init (name: String, descriptions: String? = nil, image: String, storage: Storage? = nil, date: Date, quantity: Int){
         self.name = name
         self.descriptions = descriptions
         self.image = image
         self.storage = storage
         self.date = date
+        self.quantity = quantity
     }
 }
 
@@ -107,4 +107,4 @@ let itemImages: [String] = [
     "Datei_78",
     "Datei_79"
 ]
-    
+
