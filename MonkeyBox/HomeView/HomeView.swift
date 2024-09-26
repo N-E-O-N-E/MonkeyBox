@@ -69,7 +69,9 @@ struct HomeView: View {
                                 .font(.callout)
                                 
                             Spacer()
+                            
                             NavigationLink(destination: HomeItemView(storage: item.self)){
+                                
                                 Image(systemName: "arrowshape.right.circle.fill").tint(.black)
                             }.padding(5)
                         }.padding(.horizontal, 10)
@@ -90,11 +92,13 @@ struct HomeView: View {
                     }
                     
                     .onTapGesture {
-                        withAnimation {
-                            if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
-                                selectedItems.remove(at: index)
-                            } else {
-                                selectedItems.append(item)
+                        if animationOn {
+                            withAnimation {
+                                if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
+                                    selectedItems.remove(at: index)
+                                } else {
+                                    selectedItems.append(item)
+                                }
                             }
                         }
                     }

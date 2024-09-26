@@ -76,7 +76,7 @@ struct ItemAddView: View {
                     context.insert(newItem)
                 }
             }
-        }.frame(height: 280)
+        }.frame(height: 440)
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(itemImages, id: \.self) { image in
@@ -104,7 +104,7 @@ struct ItemAddView: View {
                     }.padding(8)
                 }
             }
-            .presentationDetents([.fraction(0.8)])
+            .presentationDetents([.fraction(1.0)])
         }
         Spacer()
     }

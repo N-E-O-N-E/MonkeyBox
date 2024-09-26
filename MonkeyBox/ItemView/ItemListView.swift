@@ -11,7 +11,7 @@ struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
     
-    @State private var selectedItem: Item
+    var selectedItem: Item?
 
     @Query var items: [Item] = []
     
@@ -58,7 +58,7 @@ struct ItemListView: View {
                 }
             }
             .sheet(isPresented: $showItemDetailSheet){
-                ItemDetailView(selectedItem: selectedItem)
+                ItemDetailView(selectedItem: selectedItem!)
             }
         }
         .toolbar{
