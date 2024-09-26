@@ -19,6 +19,9 @@ struct HomeView: View {
     @State private var showAddSheet = false
     @State private var showEditSheet = false
     
+    @State private var isLinkActive = true
+    @State private var isLongPressed = false
+    
     @State private var selectedItems: [Storage] = []
     
     let columns = [
@@ -46,8 +49,9 @@ struct HomeView: View {
             
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(storages) { item in
-                   
-                    NavigationLink(destination: HomeItemView(storage: item.self)){
+                    
+                    NavigationLink(destination: HomeItemView(storage: item.self), isActive: $isLinkActive){
+  
                         VStack(alignment:.center) {
                             ZStack {
                                 Image(item.image)
@@ -79,26 +83,41 @@ struct HomeView: View {
                             .repeatForever(autoreverses: true) : .default, value: animationOn)
                         
                         .onLongPressGesture (minimumDuration: 1.0) {
+                            isLongPressed = true
+                            isLinkActive = false
                             withAnimation {
                                 animationOn = true
                             }
                         }
                         
-                        
-                    }
-                
-                    .onTapGesture {
-                        if animationOn {
-                            withAnimation {
-                                if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
-                                    selectedItems.remove(at: index)
-                                } else {
-                                    selectedItems.append(item)
-                                }
+                        .onTapGesture {
+                            
+                            if isLongPressed {
+                                
+                                isLinkActive = false
+                                
+                                    withAnimation {
+                                        if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
+                                            selectedItems.remove(at: index)
+                                        } else {
+                                            selectedItems.append(item)
+                                        }
+                                    }
+                                
+                                
+                            
+                                
+                            } else  {
+                                isLongPressed = false
+                                isLinkActive = true
+                                
                             }
+                            
                         }
                     }
-
+                    
+                    
+                    
                 }
                 
                 VStack(alignment:.center) {
@@ -136,10 +155,7 @@ struct HomeView: View {
                 
             }
             .toolbar {
-                
-                
-                
-                
+
                 ToolbarItem(placement: .topBarLeading) {
                     if !selectedItems.isEmpty {
                         
@@ -148,6 +164,7 @@ struct HomeView: View {
                                 withAnimation {
                                     animationOn = false
                                     selectedItems.removeAll()
+                                    isLongPressed = false
                                     
                                 }
                             }) {
@@ -161,6 +178,7 @@ struct HomeView: View {
                                 delSelectedItems()
                                 withAnimation {
                                     animationOn = false
+
                                     
                                 }
                             }) {
