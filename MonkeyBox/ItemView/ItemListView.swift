@@ -11,6 +11,8 @@ struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
     
+    @State private var selectedItem: [Item] = []
+
     @Query var items: [Item]
     
     @State private var showItemEditSheet = false
@@ -52,6 +54,9 @@ struct ItemListView: View {
                     }
                     
                 }
+            }
+            .sheet(isPresented: $showItemEditSheet){
+                ItemDetailView(selectedItem: selectedItem.first)
             }
         }
         .toolbar{
