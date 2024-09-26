@@ -19,9 +19,6 @@ struct HomeView: View {
     @State private var showAddSheet = false
     @State private var showEditSheet = false
     
-    @State private var isLinkActive = true
-    @State private var isLongPressed = false
-    
     @State private var selectedItems: [Storage] = []
     
     let columns = [
@@ -50,74 +47,57 @@ struct HomeView: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(storages) { item in
                     
-                    NavigationLink(destination: HomeItemView(storage: item.self), isActive: $isLinkActive){
-  
-                        VStack(alignment:.center) {
-                            ZStack {
-                                Image(item.image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 180, height: 140)
-                                    .cornerRadius(10)
-                                
-                                if selectedItems.contains(where: { $0.id == item.id }) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.pink)
-                                        .font(.system(size: 40))
-                                        .background(Color.white.opacity(1.0))
-                                        .clipShape(Circle())
-                                        .padding(8)
-                                }
+                    VStack(alignment:.center) {
+                        ZStack {
+                            Image(item.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 180, height: 140)
+                                .cornerRadius(10)
+                            
+                            if selectedItems.contains(where: { $0.id == item.id }) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.pink)
+                                    .font(.system(size: 40))
+                                    .background(Color.white.opacity(1.0))
+                                    .clipShape(Circle())
+                                    .padding(8)
                             }
+                        }
+                        HStack {
                             Text(item.name)
                                 .font(.callout)
-                                .padding(.bottom, 6)
-                        }
-                        .frame(maxWidth: 180, maxHeight: 190)
-                        .background(Color.orange.opacity(0.3))
-                        .cornerRadius(15)
-                        .padding(10)
-                        
-                        .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
-                        .animation(animationOn ? Animation.easeInOut(duration: 0.2)
-                            .repeatForever(autoreverses: true) : .default, value: animationOn)
-                        
-                        .onLongPressGesture (minimumDuration: 1.0) {
-                            isLongPressed = true
-                            isLinkActive = false
-                            withAnimation {
-                                animationOn = true
-                            }
-                        }
-                        
-                        .onTapGesture {
-                            
-                            if isLongPressed {
                                 
-                                isLinkActive = false
-                                
-                                    withAnimation {
-                                        if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
-                                            selectedItems.remove(at: index)
-                                        } else {
-                                            selectedItems.append(item)
-                                        }
-                                    }
-                                
-                                
-                            
-                                
-                            } else  {
-                                isLongPressed = false
-                                isLinkActive = true
-                                
-                            }
-                            
+                            Spacer()
+                            NavigationLink(destination: HomeItemView(storage: item.self)){
+                                Image(systemName: "arrowshape.right.circle.fill").tint(.black)
+                            }.padding(5)
+                        }.padding(.horizontal, 10)
+                    }
+                    .frame(maxWidth: 180, maxHeight: 190)
+                    .background(Color.orange.opacity(0.3))
+                    .cornerRadius(15)
+                    .padding(10)
+                    
+                    .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
+                    .animation(animationOn ? Animation.easeInOut(duration: 0.2)
+                        .repeatForever(autoreverses: true) : .default, value: animationOn)
+                    
+                    .onLongPressGesture (minimumDuration: 1.0) {
+                        withAnimation {
+                            animationOn = true
                         }
                     }
                     
-                    
-                    
+                    .onTapGesture {
+                        withAnimation {
+                            if let index = selectedItems.firstIndex(where: { $0.id == item.id }) {
+                                selectedItems.remove(at: index)
+                            } else {
+                                selectedItems.append(item)
+                            }
+                        }
+                    }
                 }
                 
                 VStack(alignment:.center) {
@@ -155,17 +135,15 @@ struct HomeView: View {
                 
             }
             .toolbar {
-
+                
                 ToolbarItem(placement: .topBarLeading) {
                     if !selectedItems.isEmpty {
                         
                         HStack {
                             Button(action: {
                                 withAnimation {
-                                    animationOn = false
                                     selectedItems.removeAll()
-                                    isLongPressed = false
-                                    
+                                    animationOn = false
                                 }
                             }) {
                                 HStack{
@@ -178,8 +156,6 @@ struct HomeView: View {
                                 delSelectedItems()
                                 withAnimation {
                                     animationOn = false
-
-                                    
                                 }
                             }) {
                                 HStack{
