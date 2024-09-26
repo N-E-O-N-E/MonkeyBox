@@ -11,55 +11,66 @@ struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
     
+    @State private var searchText: String = ""
+    
+    
+    
+    
     var selectedItem: Item?
-
+    
     @Query var items: [Item] = []
     
     @State private var showItemEditSheet = false
     @State private var showItemDetailSheet = false
-
+    
     
     var body: some View {
-
+        
         VStack {
-            Text("MonkeyBox List").font(.system(size: 40)).bold()
-                .padding(10)
+            Text("MonkeyBox List \(items.count) Items")
+                .font(.system(size: 20)).bold()
+                .padding(5)
+            TextField("Search...", text: $searchText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
             List{
-                ForEach(items) { item in
+                ForEach(items.filter { item in
+                    searchText.isEmpty || item.name.lowercased().contains(searchText.lowercased())
+                }) { item in
                     VStack(alignment: .leading) {
-                        HStack{
-                            Image(item.image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                            
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text("\(item.date.formatted(date: .abbreviated, time: .omitted))")
-                                    .font(.caption2)
-                            }
-                            Spacer()
-                            
-                            Text("\(item.quantity)")
-                                .font(.subheadline)
-                                .padding(10)
-                            
+                    HStack{
+                        Image(item.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40, height: 40)
+                        
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                                .font(.headline)
+                            Text("\(item.date.formatted(date: .abbreviated, time: .omitted))")
+                                .font(.caption2)
                         }
-                    }.onTapGesture {
-                        showItemDetailSheet = true
+                        Spacer()
+                        
+                        Text("\(item.quantity)")
+                            .font(.subheadline)
+                            .padding(10)
+                        
                     }
-                    .sheet(isPresented: $showItemDetailSheet){
-                        ItemDetailView(selectedItem: item)
-                    }
-                    .frame(height: 45)
-                    .swipeActions{
-                        Button("Löschen", role: .destructive) {
-                            if let index = items.firstIndex(of: item) {
-                                context.delete(items[index])
-                            }
+                }.onTapGesture {
+                    showItemDetailSheet = true
+                }
+                .sheet(isPresented: $showItemDetailSheet){
+                    ItemDetailView(selectedItem: item)
+                }
+                .frame(height: 45)
+                .swipeActions{
+                    Button("Löschen", role: .destructive) {
+                        if let index = items.firstIndex(of: item) {
+                            context.delete(items[index])
                         }
                     }
+                }
                     
                 }
             }
@@ -69,20 +80,20 @@ struct ItemListView: View {
         
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
-               
-                    Button(action: {
-                        showItemEditSheet = true
-                        
-                    }) {
-                        Text("Item ")
-                        Image(systemName: "plus.app")
-                            .foregroundStyle(.blue)
-                        
-                    }
-                    .sheet(isPresented: $showItemEditSheet){
-                        ItemAddView()
-                    }
+                
+                Button(action: {
+                    showItemEditSheet = true
+                    
+                }) {
+                    Text("Item ")
+                    Image(systemName: "plus.app")
+                        .foregroundStyle(.blue)
+                    
                 }
+                .sheet(isPresented: $showItemEditSheet){
+                    ItemAddView()
+                }
+            }
         }
     }
     
