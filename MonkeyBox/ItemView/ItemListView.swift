@@ -10,8 +10,11 @@ import SwiftUI
 struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
+    
     @Query var items: [Item]
-
+    
+    @State private var showItemEditSheet = false
+    
     var body: some View {
 
         VStack {
@@ -44,6 +47,23 @@ struct ItemListView: View {
                     
                 }
             }
+        }
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+               
+                    Button(action: {
+                        showItemEditSheet = true
+                        
+                    }) {
+                        Text("Item ")
+                        Image(systemName: "plus.app")
+                            .foregroundStyle(.blue)
+                        
+                    }
+                    .sheet(isPresented: $showItemEditSheet){
+                        ItemAddView()
+                    }
+                }
         }
     }
     

@@ -12,13 +12,13 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     @Query var storages: [Storage]
     
-//    @AppStorage("loginState") private var loginState: Bool = false
+    //    @AppStorage("loginState") private var loginState: Bool = false
     
     @State private var animationOn = false
     @State private var loginActiv: Bool = false
     @State private var showAddSheet = false
     @State private var showEditSheet = false
-    @State private var showItemEditSheet = false
+    
     @State private var selectedItems: [Storage] = []
     
     let columns = [
@@ -46,43 +46,47 @@ struct HomeView: View {
             
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(storages) { item in
-                    
-                    VStack(alignment:.center) {
-                        ZStack {
-                            Image(item.image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 180, height: 140)
-                                .cornerRadius(10)
-                            
-                            if selectedItems.contains(where: { $0.id == item.id }) {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.pink)
-                                    .font(.system(size: 40))
-                                    .background(Color.white.opacity(1.0))
-                                    .clipShape(Circle())
-                                    .padding(8)
+                   
+                    NavigationLink(destination: HomeItemView(storage: item.self)){
+                        VStack(alignment:.center) {
+                            ZStack {
+                                Image(item.image)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 180, height: 140)
+                                    .cornerRadius(10)
+                                
+                                if selectedItems.contains(where: { $0.id == item.id }) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.pink)
+                                        .font(.system(size: 40))
+                                        .background(Color.white.opacity(1.0))
+                                        .clipShape(Circle())
+                                        .padding(8)
+                                }
+                            }
+                            Text(item.name)
+                                .font(.callout)
+                                .padding(.bottom, 6)
+                        }
+                        .frame(maxWidth: 180, maxHeight: 190)
+                        .background(Color.orange.opacity(0.3))
+                        .cornerRadius(15)
+                        .padding(10)
+                        
+                        .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
+                        .animation(animationOn ? Animation.easeInOut(duration: 0.2)
+                            .repeatForever(autoreverses: true) : .default, value: animationOn)
+                        
+                        .onLongPressGesture (minimumDuration: 1.0) {
+                            withAnimation {
+                                animationOn = true
                             }
                         }
-                        Text(item.name)
-                            .font(.callout)
-                            .padding(.bottom, 6)
+                        
+                        
                     }
-                    .frame(maxWidth: 180, maxHeight: 190)
-                    .background(Color.orange.opacity(0.3))
-                    .cornerRadius(15)
-                    .padding(10)
-                    
-                    .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
-                    .animation(animationOn ? Animation.easeInOut(duration: 0.2)
-                        .repeatForever(autoreverses: true) : .default, value: animationOn)
-                    
-                    .onLongPressGesture (minimumDuration: 1.0) {
-                        withAnimation {
-                            animationOn = true
-                        }
-                    }
-                    
+                
                     .onTapGesture {
                         if animationOn {
                             withAnimation {
@@ -94,6 +98,7 @@ struct HomeView: View {
                             }
                         }
                     }
+
                 }
                 
                 VStack(alignment:.center) {
@@ -131,22 +136,8 @@ struct HomeView: View {
                 
             }
             .toolbar {
-            
-                ToolbarItem(placement: .topBarTrailing) {
-                   
-                        Button(action: {
-                            showItemEditSheet = true
-                            
-                        }) {
-                            Text("Item ")
-                            Image(systemName: "plus.app")
-                                .foregroundStyle(.blue)
-                            
-                        }
-                        .sheet(isPresented: $showItemEditSheet){
-                            ItemAddView()
-                        }
-                    }
+                
+                
                 
                 
                 ToolbarItem(placement: .topBarLeading) {

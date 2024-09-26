@@ -5,7 +5,6 @@ struct ItemAddView: View {
     @Query var storages: [Storage]
     @State private var itemName = ""
     @State private var itemDescription = ""
-    @State private var itemCategory: Storage?
     @State private var itemImage = ""
     @State private var itemDate = Date()
     @State private var selectedStorage: Storage?
@@ -28,15 +27,19 @@ struct ItemAddView: View {
             TextField("Name", text: $itemName)
             TextField("Description", text: $itemDescription)
             Picker("Storage", selection: $selectedStorage) {
-                ForEach(storages){ storage in
-                    Text(storage.name).tag(storage as Storage)
+                if !storages.isEmpty {
+                    ForEach(storages){ storage in
+                        Text(storage.name).tag(storage)
+                    }
                 }
+                
             }
             Button("Save Item") {
-                if !itemImage.isEmpty && !itemName.isEmpty && itemCategory != nil {
+                if !itemImage.isEmpty && !itemName.isEmpty && selectedStorage != nil {
                     let newItem = Item(name: itemName, descriptions: itemDescription,
                                        image: itemImage, storage: selectedStorage, date: itemDate)
                     context.insert(newItem)
+                    
                 }
             }
         }.frame(height: 280)

@@ -7,19 +7,27 @@
 
 import SwiftUI
 import SwiftData
+
 struct HomeItemView: View {
+    
   @Environment(\.modelContext) private var context
+    
   var storage: Storage
+    
   @Query var items: [Item]
+    
   var body: some View {
+      
     ScrollView {
       VStack {
         Text("\(storage.name) Inventory")
           .font(.title).bold()
           .padding()
+          
         if items.isEmpty {
           Text("No Room Items yet")
-        }else {
+        } else {
+            
           LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
             ForEach(storage.items) { item in
               VStack {

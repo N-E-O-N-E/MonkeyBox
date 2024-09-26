@@ -34,8 +34,9 @@ struct ContentView: View {
                         Label("Storages", systemImage: "house.fill")
                     }
                     .tag(1)
-
-                    ItemListView()
+                    NavigationStack{
+                        ItemListView()
+                    }
                         .tabItem {
                             Label("Items", systemImage: "doc.fill")
                         }
