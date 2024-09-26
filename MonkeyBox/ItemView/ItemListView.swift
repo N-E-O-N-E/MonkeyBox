@@ -46,7 +46,13 @@ struct ItemListView: View {
                                 .padding(10)
                             
                         }
-                    }.frame(height: 45)
+                    }.onTapGesture {
+                        showItemDetailSheet = true
+                    }
+                    .sheet(isPresented: $showItemDetailSheet){
+                        ItemDetailView(selectedItem: item)
+                    }
+                    .frame(height: 45)
                     .swipeActions{
                         Button("Löschen", role: .destructive) {
                             if let index = items.firstIndex(of: item) {
@@ -57,10 +63,10 @@ struct ItemListView: View {
                     
                 }
             }
-            .sheet(isPresented: $showItemDetailSheet){
-                ItemDetailView(selectedItem: selectedItem!)
-            }
+            
         }
+        
+        
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
                

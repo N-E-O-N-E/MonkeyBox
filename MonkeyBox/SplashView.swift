@@ -18,19 +18,19 @@ struct SplashView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    Text("MonkeyBox")
+                    Text("KongTainer")
                         .font(.system(size: 60)).bold()
                         .foregroundStyle(.white)
                         .shadow(radius: 4)
                     
-                    Image("MonkeyBoxLogo")
+                    Image("Kongtainer")
                         .resizable()
                         .frame(width: 380, height: 380, alignment: .center)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(radius: 4)
                     
-                    Text("Inventory")
-                        .font(.system(size: 50))
+                    Text("...my king container")
+                        .font(.system(size: 30))
                         .foregroundStyle(.white)
                         .shadow(radius: 4)
                 }

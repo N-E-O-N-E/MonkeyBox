@@ -8,38 +8,56 @@ struct HomeItemView: View {
     @State private var showItemDetailSheet = false
     
     var storage: Storage
+    var selectedItem: Item?
     
     @Query var items: [Item]
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Text("\(storage.name) Inventory")
-                    .font(.title).bold()
-                    .padding()
-                if items.isEmpty {
-                    Text("No Room Items yet")
-                } else {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
-                        ForEach(storage.items) { item in
-                            VStack {
-                                Image(item.image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 34, height: 34)
+        
+        VStack {
+            Text("Storage List").font(.system(size: 40)).bold()
+                .padding(10)
+            List{
+                ForEach(items.filter({ $0.storage == storage.self })) { item in
+                    VStack(alignment: .leading) {
+                        HStack{
+                            Image(item.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                            
+                            VStack(alignment: .leading) {
                                 Text(item.name)
                                     .font(.headline)
-                                    .padding(.top, 5)
+                                Text("\(item.date.formatted(date: .abbreviated, time: .omitted))")
+                                    .font(.caption2)
                             }
-                            .frame(maxWidth: .infinity)
-                            .background(Color.black.opacity(0.5))
-                            .padding()
+                            Spacer()
+                            
+                            Text("\(item.quantity)")
+                                .font(.subheadline)
+                                .padding(10)
+                            
+                        }
+                    }.onTapGesture {
+                        showItemDetailSheet = true
+                    }
+                    .sheet(isPresented: $showItemDetailSheet){
+                        ItemDetailView(selectedItem: item)
+                    }
+                    .frame(height: 45)
+                    .swipeActions{
+                        Button("Löschen", role: .destructive) {
+                            if let index = items.firstIndex(of: item) {
+                                context.delete(items[index])
+                            }
                         }
                     }
+                    
                 }
             }
+            
         }
-        .navigationTitle(storage.name)
     }
 }
 #Preview {
