@@ -1,10 +1,16 @@
 import SwiftUI
 import SwiftData
+
 struct HomeItemView: View {
+    
     @Environment(\.modelContext) private var context
+    
     @State private var showItemDetailSheet = false
+    
     var storage: Storage
+    
     @Query var items: [Item]
+    
     var body: some View {
         ScrollView {
             VStack {

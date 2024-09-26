@@ -11,11 +11,13 @@ struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
     
-    @State private var selectedItem: [Item] = []
+    @State private var selectedItem: Item
 
-    @Query var items: [Item]
+    @Query var items: [Item] = []
     
     @State private var showItemEditSheet = false
+    @State private var showItemDetailSheet = false
+
     
     var body: some View {
 
@@ -55,8 +57,8 @@ struct ItemListView: View {
                     
                 }
             }
-            .sheet(isPresented: $showItemEditSheet){
-                ItemDetailView(selectedItem: selectedItem.first)
+            .sheet(isPresented: $showItemDetailSheet){
+                ItemDetailView(selectedItem: selectedItem)
             }
         }
         .toolbar{
@@ -86,3 +88,4 @@ struct ItemListView: View {
     return ItemListView()
         .modelContainer(container)
 }
+

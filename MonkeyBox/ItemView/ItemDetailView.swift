@@ -74,7 +74,7 @@ struct ItemDetailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("\(selectedItem.name) Details")
+    //    .navigationTitle("\(selectedItem?.name ?? "No Item Name") Details")
     }
 }
 
