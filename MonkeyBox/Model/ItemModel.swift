@@ -16,6 +16,7 @@ class Item: Identifiable{
     var storage: Storage?
     var date: Date
     var quantity: Int = 1
+    
     init (name: String, descriptions: String? = nil, image: String, storage: Storage? = nil, date: Date, quantity: Int){
         self.name = name
         self.descriptions = descriptions

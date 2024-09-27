@@ -4,6 +4,7 @@ import SwiftData
 struct SettingsView: View {
     @AppStorage("darkMode") var darkMode: Bool = false
     @AppStorage("language") var appLanguage: String = "Deutsch"
+    @AppStorage("loginState") private var loginState: Bool = false
     var language = ["English", "Deutsch", "Französisch"]
     @State private var notifications: Bool = true
     
@@ -63,6 +64,10 @@ struct SettingsView: View {
                 Picker("Language", selection: $appLanguage) {
                     ForEach(language, id: \.self) { language in
                         Text(language)}
+                }
+                
+                Button("Logout") {
+                    loginState = false
                 }
             }
         }
