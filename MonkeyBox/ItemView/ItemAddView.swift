@@ -24,7 +24,7 @@ struct ItemAddView: View {
                 Text("Add Item ").font(.title).bold()
                 Image(itemImage)
                     .resizable()
-                    .frame(width: 36, height: 36)
+                    .frame(width: 45, height: 45)
             }.frame(height: 40)
             TextField("Name", text: $itemName)
             TextField("Description", text: $itemDescription)
@@ -35,34 +35,30 @@ struct ItemAddView: View {
                     }
                 }){
                     Text("-")
-                        .frame(width: 15, height: 5)
+                        .frame(width: 75, height: 30)
                         .font(.title)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        
+                        .background(Color(hue: 1.0, saturation: 0.6, brightness: 1.0))
+                        .foregroundColor(Color.white)
+                        .clipShape(.capsule)
                 }
-                
-                
-                
+
                 Button(action: {
                     if itemQuantity >= 1 {
                         itemQuantity += 1
                     }
                 }){
                     Text("+")
-                        .frame(width: 15, height: 5)
+                        .frame(width: 75, height: 28)
                         .font(.title)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        
+                        .background(Color(hue: 0.4, saturation: 0.6, brightness: 0.7))
+                        .foregroundColor(Color.white)
+                        .clipShape(.capsule)
                 }
             
             Text("Anzahl: \(itemQuantity)")
             
             
-            Picker("Storage", selection: $selectedStorage) {
+            Picker("Storage select:", selection: $selectedStorage) {
                 if !storages.isEmpty {
                     ForEach(storages){ storage in
                         Text(storage.name).tag(storage)
@@ -75,7 +71,11 @@ struct ItemAddView: View {
                                        image: itemImage, storage: selectedStorage, date: itemDate, quantity: itemQuantity)
                     context.insert(newItem)
                 }
-            }
+            }.frame(width: 100, height: 28)
+                .background(Color(hue: 0.6, saturation: 0.6, brightness: 0.6))
+                .foregroundColor(Color.white)
+                .clipShape(.capsule)
+            
         }.frame(height: 440)
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
@@ -89,7 +89,8 @@ struct ItemAddView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 64, height: 64)
-                                .border(.black)
+                                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 0.9))
+                            
                             if image == itemImage {
                                 let selected = true
                                 Circle()
@@ -108,4 +109,11 @@ struct ItemAddView: View {
         }
         Spacer()
     }
+}
+
+#Preview {
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Storage.self, Item.self, User.self, configurations: configuration)
+    return ItemAddView()
+        .modelContainer(container)
 }

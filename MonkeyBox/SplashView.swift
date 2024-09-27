@@ -10,31 +10,34 @@ import SwiftData
 
 struct SplashView: View {
     
-    
     var body: some View {
         
-            ZStack {
-                Color(.brown)
-                    .ignoresSafeArea()
+        ZStack {
+            
+            Color(hue: 0.1, saturation: 0.4, brightness: 0.6)
+                .ignoresSafeArea()
+            
+            VStack {
+                Text("KongTainer")
+                    .font(.system(size: 60)).bold()
+                    .foregroundStyle(.white)
+                    .shadow(radius: 2)
                 
-                VStack {
-                    Text("KongTainer")
-                        .font(.system(size: 60)).bold()
-                        .foregroundStyle(.white)
-                        .shadow(radius: 4)
-                    
-                    Image("Kongtainer")
-                        .resizable()
-                        .frame(width: 380, height: 380, alignment: .center)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .shadow(radius: 4)
-                    
-                    Text("...my king container")
-                        .font(.system(size: 30))
-                        .foregroundStyle(.white)
-                        .shadow(radius: 4)
-                }
+                Image("Kongtainer")
+                    .resizable()
+                    .frame(width: 380, height: 380, alignment: .center)
+                    .clipShape(RoundedRectangle(cornerRadius: 9))
+                    .opacity(0.9)
+                    .shadow(radius: 3)
+                
+                Text("\n...my king container")
+                    .font(.system(size: 30))
+                    .foregroundStyle(.white)
+                    .shadow(radius: 1)
+                
+                
             }
+        }
     }
 }
 

@@ -66,19 +66,21 @@ struct HomeView: View {
                         }
                         HStack {
                             Text(item.name)
-                                .font(.callout)
+                                .font(.callout).foregroundStyle(.white)
                                 
                             Spacer()
                             
                             NavigationLink(destination: HomeItemView(storage: item.self)){
                                 
-                                Image(systemName: "arrowshape.right.circle.fill").tint(.black)
+                                Image(systemName: "arrowshape.right.circle.fill")
+                                    .foregroundStyle(.white)
                             }.padding(5)
                         }.padding(.horizontal, 10)
                     }
                     .frame(maxWidth: 180, maxHeight: 190)
-                    .background(Color.orange.opacity(0.3))
-                    .cornerRadius(15)
+                    .background(LinearGradient(gradient: Gradient(colors: [Color(.white), Color(.systemGray3), Color(.black).opacity(0.7)]),startPoint: .top,endPoint: .bottom))
+                    .shadow(radius: 1)
+                    .cornerRadius(8)
                     .padding(10)
                     
                     .rotationEffect(Angle(degrees: animationOn ? -5 : 0))
@@ -110,7 +112,7 @@ struct HomeView: View {
                     }) {
                         
                         ZStack(alignment:.center) {
-                            Image("MonkeyBoxLogo")
+                            Image("Kongtainer")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 180, height: 140)
@@ -127,14 +129,15 @@ struct HomeView: View {
                     .sheet(isPresented: $showAddSheet){
                         HomeAddView()
                     }
-                    Text("Hinzufügen")
-                        .font(.callout)
+                    Text("NEW")
+                        .font(.callout).foregroundStyle(.white)
                         .padding(.bottom, 6)
                 }
                 .frame(maxWidth: 180, maxHeight: 190)
-                .background(Color.orange.opacity(0.3))
-                .cornerRadius(15)
+                .background(LinearGradient(gradient: Gradient(colors: [Color(.white), Color(.systemGray3), Color(.black).opacity(0.7)]),startPoint: .top,endPoint: .bottom))
+                .cornerRadius(8)
                 .padding(10)
+                .shadow(radius: 1)
                 
                 
             }
@@ -188,6 +191,7 @@ struct HomeView: View {
                 }
             }
         }
+        .background(LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.black.opacity(0.3)]),startPoint: .top, endPoint: .bottom))
     }
 }
 

@@ -10,7 +10,6 @@ import SwiftData
 
 struct ItemDetailView: View {
     
-    
     @Environment(\.modelContext) private var context
     
     var selectedItem: Item
@@ -19,62 +18,66 @@ struct ItemDetailView: View {
     
     @State private var itemQuantity = 1
     
-    
     var body: some View {
         
-        Text(selectedItem.name)
-            .font(.title)
-            .fontWeight(.semibold)
-        
-        Image(selectedItem.image)
-            .resizable()
-            .scaledToFit()
-            .frame(height: 80)
         List{
-            Text("Description:")
             
-            Text("Added:")
+            HStack {
+                Text(selectedItem.name)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                Spacer()
+                Image(selectedItem.image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 60)
+            }
+            Text("Description:")
+                .font(.subheadline).bold()
+                .multilineTextAlignment(.leading)
+            Text("Item Added: ")
                 .font(.subheadline)
-            Text(selectedItem.date.formatted(date: .abbreviated, time: .omitted))
+            Text("Date: \(selectedItem.date.formatted(date: .abbreviated, time: .omitted))")
                 .font(.subheadline)
             
             Text("Quantity: \(selectedItem.quantity)")
                 .font(.subheadline)
             Button(action: {
-                if itemQuantity > 1 {
-                    itemQuantity -= 1
+                if selectedItem.quantity > 1 {
+                    selectedItem.quantity -= 1
                 }
             }){
                 Text("-")
-                    .frame(width: 15, height: 5)
+                    .frame(width: 75, height: 30)
                     .font(.title)
-                    .padding()
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                
+                    .background(Color(hue: 1.0, saturation: 0.6, brightness: 1.0))
+                    .foregroundColor(Color.white)
+                    .clipShape(.capsule)
             }
             
-            
-            
             Button(action: {
-                if itemQuantity >= 1 {
-                    itemQuantity += 1
+                if selectedItem.quantity >= 1 {
+                    selectedItem.quantity += 1
                 }
             }){
                 Text("+")
-                    .frame(width: 15, height: 5)
+                    .frame(width: 75, height: 28)
                     .font(.title)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                
+                    .background(Color(hue: 0.4, saturation: 0.6, brightness: 0.7))
+                    .foregroundColor(Color.white)
+                    .clipShape(.capsule)
             }
             
-            
-            Spacer()
+            Button("Save Item") {
+                
+                //Code
+                
+            }.frame(width: 100, height: 28)
+                .background(Color(hue: 0.6, saturation: 0.6, brightness: 0.6))
+                .foregroundColor(Color.white)
+                .clipShape(.capsule)
         }
         .padding()
-    //    .navigationTitle("\(selectedItem?.name ?? "No Item Name") Details")
     }
 }
 
