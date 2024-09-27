@@ -27,9 +27,8 @@ struct ContentView: View {
         } else {
             if loginState {
                 TabView(selection: $selectedTab) {
-                    NavigationStack {
+                
                         HomeView()
-                    }
                     .tabItem {
                         Label("Storages", systemImage: "house.fill")
                     }
