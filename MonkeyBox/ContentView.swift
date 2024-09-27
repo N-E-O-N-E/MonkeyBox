@@ -31,20 +31,20 @@ struct ContentView: View {
                         HomeView()
                     .tabItem {
                         Label("Storages", systemImage: "house.fill")
-                    }
+                    }.tint(.black)
                     .tag(1)
                     NavigationStack{
                         ItemListView()
                     }
                         .tabItem {
                             Label("Items", systemImage: "doc.fill")
-                        }
+                        }.tint(.black)
                         .tag(2)
 
                     SettingsView()
                         .tabItem {
                             Label("Settings", systemImage: "gearshape.fill")
-                        }
+                        }.tint(.black)
                         .tag(3)
                 }
             } else {

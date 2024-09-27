@@ -14,7 +14,7 @@ struct ItemListView: View {
     
     @State private var selectedItem: Item?
     
-    @Query var items: [Item] = []
+    @Query(sort: \Item.name) var items: [Item] = []
     
     @State private var showItemEditSheet = false
     @State private var showItemDetailSheet = false

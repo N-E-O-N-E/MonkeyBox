@@ -10,7 +10,7 @@ import SwiftData
 
 struct HomeView: View {
     @Environment(\.modelContext) private var context
-    @Query var storages: [Storage]
+    @Query(sort: \Storage.name) var storages: [Storage]
     
     //    @AppStorage("loginState") private var loginState: Bool = false
     
