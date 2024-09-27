@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 struct ItemAddView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) var dismiss
     @Query var storages: [Storage]
     
     
@@ -19,6 +20,11 @@ struct ItemAddView: View {
         GridItem(.flexible())
     ]
     var body: some View {
+        VStack {
+            RoundedRectangle(cornerRadius: 5)
+                .frame(width: 160, height: 7)
+                .padding()
+        }
         Form {
             HStack{
                 Text("Add Item ").font(.title).bold()
@@ -70,6 +76,7 @@ struct ItemAddView: View {
                     let newItem = Item(name: itemName, descriptions: itemDescription,
                                        image: itemImage, storage: selectedStorage, date: itemDate, quantity: itemQuantity)
                     context.insert(newItem)
+                    dismiss()
                 }
             }.frame(width: 100, height: 28)
                 .background(Color(hue: 0.6, saturation: 0.6, brightness: 0.6))

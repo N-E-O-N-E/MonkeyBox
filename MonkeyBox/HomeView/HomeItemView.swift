@@ -8,14 +8,14 @@ struct HomeItemView: View {
     @State private var showItemDetailSheet = false
     
     var storage: Storage
-    var selectedItem: Item?
+    @State private var selectedItem: Item?
     
     @Query var items: [Item]
     
     var body: some View {
         
         VStack {
-            Text("Storage List").font(.system(size: 40)).bold()
+            Text("\(storage.name)").font(.system(size: 40)).bold()
                 .padding(10)
             List{
                 ForEach(items.filter({ $0.storage == storage.self })) { item in
@@ -40,9 +40,10 @@ struct HomeItemView: View {
                             
                         }
                     }.onTapGesture {
-                        showItemDetailSheet = true
+                        selectedItem = item
+                        
                     }
-                    .sheet(isPresented: $showItemDetailSheet){
+                    .sheet(item: $selectedItem){ item in
                         ItemDetailView(selectedItem: item)
                     }
                     .frame(height: 45)

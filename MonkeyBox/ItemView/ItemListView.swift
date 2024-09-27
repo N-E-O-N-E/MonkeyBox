@@ -10,13 +10,9 @@ import SwiftUI
 struct ItemListView: View {
     
     @Environment(\.modelContext) private var context
-    
     @State private var searchText: String = ""
     
-    
-    
-    
-    var selectedItem: Item?
+    @State private var selectedItem: Item?
     
     @Query var items: [Item] = []
     
@@ -28,15 +24,20 @@ struct ItemListView: View {
         
         VStack {
             Text("MonkeyBox List \(items.count) Items")
+            
                 .font(.system(size: 20)).bold()
                 .padding(5)
             TextField("Search...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
+            
             List{
+                
                 ForEach(items.filter { item in
                     searchText.isEmpty || item.name.lowercased().contains(searchText.lowercased())
+                
                 }) { item in
+                    
                     VStack(alignment: .leading) {
                     HStack{
                         Image(item.image)
@@ -56,12 +57,15 @@ struct ItemListView: View {
                             .font(.subheadline)
                             .padding(10)
                         
+                    }.onTapGesture {
+                        selectedItem = item
+                        showItemDetailSheet = true
+                        
                     }
-                }.onTapGesture {
-                    showItemDetailSheet = true
                 }
-                .sheet(isPresented: $showItemDetailSheet){
+                    .sheet(item: $selectedItem){ item in
                     ItemDetailView(selectedItem: item)
+                    
                 }
                 .frame(height: 45)
                 .swipeActions{

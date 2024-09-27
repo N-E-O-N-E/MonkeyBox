@@ -120,7 +120,7 @@ struct HomeView: View {
                                     .scaledToFill()
                                     .frame(width: 180, height: 140)
                                     .cornerRadius(10)
-                                    .blur(radius: 2)
+                                    .blur(radius: 1)
                                 ZStack {
                                     Image(systemName: "plus.app.fill")
                                         .foregroundStyle(.white)
@@ -195,6 +195,7 @@ struct HomeView: View {
                 }
             }
             .background(LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.black.opacity(0.3)]),startPoint: .top, endPoint: .bottom))
+            
             .navigationDestination(item: $selectedStorage){
                 HomeItemView(storage: $0)
             }

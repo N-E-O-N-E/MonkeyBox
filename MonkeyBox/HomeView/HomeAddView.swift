@@ -11,6 +11,7 @@ import SwiftData
 struct HomeAddView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) var dismiss
     
     @State private var storageName = ""
     @State private var selectedImage = ""
@@ -24,6 +25,7 @@ struct HomeAddView: View {
                 if selectedImage != "" && storageName != "" {
                     let newStorageRoom = Storage(name: storageName, image: selectedImage)
                     context.insert(newStorageRoom)
+                    dismiss()
                 }
             }
             

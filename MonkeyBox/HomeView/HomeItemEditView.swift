@@ -4,6 +4,7 @@ import SwiftData
 struct HomeItemEditView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) var dismiss
     
     @Query var storages: [Storage]
     
@@ -24,6 +25,7 @@ struct HomeItemEditView: View {
                 if !storageName.isEmpty {
                     selectedItem?.name = storageName
                     selectedItem?.image = selectedImage
+                    dismiss()
 
                 }else {
                     saveAlert = true
