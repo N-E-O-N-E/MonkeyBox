@@ -42,6 +42,9 @@ struct ItemDetailView: View {
             Text("Description: \(selectedItem!.descriptions ?? "")")
                 .font(.subheadline)
                 .multilineTextAlignment(.leading)
+            Text("Storage: \(selectedItem!.storage?.name ?? "")")
+                .font(.subheadline)
+                .multilineTextAlignment(.leading)
             Text("Item Added: \(selectedItem!.date.formatted(date: .abbreviated, time: .omitted))")
                 .font(.subheadline)
             

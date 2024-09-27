@@ -41,7 +41,7 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 HStack {
-                    Text("MonkeyBox").font(.system(size: 40)).bold()
+                    Text("KongTainer").font(.system(size: 40)).bold()
                         .padding(10)
                     
                     Spacer()
@@ -194,7 +194,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .background(LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.black.opacity(0.3)]),startPoint: .top, endPoint: .bottom))
+//            .background(LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.black.opacity(0.3)]),startPoint: .top, endPoint: .bottom))
             
             .navigationDestination(item: $selectedStorage){
                 HomeItemView(storage: $0)
